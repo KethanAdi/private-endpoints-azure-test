@@ -6,3 +6,7 @@ https://github.com/MicrosoftDocs/azure-dev-docs/blob/main/articles/terraform/cre
 
 
 https://www.codeproject.com/Articles/5260755/Create-an-Azure-Virtual-Machine-with-Terraform
+
+
+
+https://docs.microsoft.com/en-us/azure/developer/terraform/create-linux-virtual-machine-with-infrastructure
