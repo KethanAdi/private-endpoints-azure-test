@@ -12,9 +12,9 @@ async def run():
         event_data_batch = await producer.create_batch()
 
         # Add events to the batch.
-        event_data_batch.add(EventData('First event 1'))
-        event_data_batch.add(EventData('Second event 2'))
-        event_data_batch.add(EventData('Third event 3'))
+        event_data_batch.add(EventData('1First event '))
+        event_data_batch.add(EventData('2Second event'))
+        event_data_batch.add(EventData('3Third event'))
 
         # Send the batch of events to the event hub.
         await producer.send_batch(event_data_batch)
