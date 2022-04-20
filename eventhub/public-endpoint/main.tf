@@ -4,7 +4,7 @@ resource "azurerm_resource_group" "rg" {
 }
 
 resource "azurerm_eventhub_namespace" "event_namespace" {
-  name                = "TestEventHubNamespace"
+  name                = var.event_hub_namespace_n
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   sku                 = "Standard"
@@ -16,7 +16,7 @@ resource "azurerm_eventhub_namespace" "event_namespace" {
 }
 
 resource "azurerm_eventhub" "eventhub1" {
-  name                = "TestEventHub"
+  name                = var.event_hub_n
   namespace_name      = azurerm_eventhub_namespace.event_namespace.name
   resource_group_name = azurerm_resource_group.rg.name
   partition_count     = 2
