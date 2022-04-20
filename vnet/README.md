@@ -1,6 +1,6 @@
 
 
-
+https://github.com/MicrosoftDocs/azure-dev-docs/blob/main/articles/terraform/create-linux-virtual-machine-with-infrastructure.md
 
 
 
