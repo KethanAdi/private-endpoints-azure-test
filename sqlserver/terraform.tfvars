@@ -5,8 +5,8 @@ app_name    = "sql"
 company     = "kopicloud"
 prefix      = "kopi"
 environment = "dev"
-location    = "West US"
-resource_group_name = "resource-group"
+location    = "South Central US"
+resource_group_name = "1-9b5b2b5e-playground-sandbox"
 
 ##################
 # Authentication #
