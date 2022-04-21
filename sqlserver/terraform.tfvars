@@ -2,8 +2,8 @@
 # Common Variables #
 ####################
 app_name    = "sql"
-company     = "kopicloud"
-prefix      = "kopi"
+company     = "ktestcloud"
+prefix      = "ktest"
 environment = "dev"
 location    = "South Central US"
 resource_group_name = "1-9b5b2b5e-playground-sandbox"
@@ -19,10 +19,10 @@ azure-tenant-id       = "74d1b21c-94a8-4cb3-85a8-3abeb1fb449e"
 ###########
 # Network #
 ###########
-kopi-vnet-cidr       = "10.50.0.0/16"
-kopi-db-subnet-cidr  = "10.50.2.0/24"
-kopi-private-dns     = "kopicloud.lan"
-kopi-dns-privatelink = "kopidb"
+ktest-vnet-cidr       = "10.50.0.0/16"
+ktest-db-subnet-cidr  = "10.50.2.0/24"
+ktest-private-dns     = "ktestcloud.lan"
+ktest-dns-privatelink = "ktestdb"
 #sec id test2
 #1b96856d-e1eb-4cc1-906f-2373495d6135
 #sec value
