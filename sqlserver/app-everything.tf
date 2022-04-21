@@ -27,14 +27,14 @@ provider "azurerm" {
 ####################
 
 # Create a resource group
-resource "azurerm_resource_group" "kopi-rg" {
-  name     = var.resource_group_name
-  location = var.location
-
-  tags = {
-    environment = var.environment
-  }
-}
+#resource "azurerm_resource_group" "kopi-rg" {
+#  name     = var.resource_group_name
+#  location = var.location
+#
+#  tags = {
+#    environment = var.environment
+#  }
+#}
 
 # Create the VNET
 resource "azurerm_virtual_network" "kopi-vnet" {
