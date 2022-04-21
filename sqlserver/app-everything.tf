@@ -63,18 +63,18 @@ resource "azurerm_subnet" "ktest-db-subnet" {
 ###################
 
 # Create a Private DNS Zone
-resource "azurerm_private_dns_zone" "ktest-private-dns" {
-  name                = var.ktest-private-dns
-  resource_group_name = data.azurerm_resource_group.ktest-rg.name
-}
+#resource "azurerm_private_dns_zone" "ktest-private-dns" {
+#  name                = var.ktest-private-dns
+#  resource_group_name = data.azurerm_resource_group.ktest-rg.name
+#}
 
 # Link the Private DNS Zone with the VNET
-resource "azurerm_private_dns_zone_virtual_network_link" "ktest-private-dns-link" {
-  name                  = "${var.prefix}-${var.environment}-${var.app_name}-vnet"
-  resource_group_name   = data.azurerm_resource_group.ktest-rg.name
-  private_dns_zone_name = azurerm_private_dns_zone.ktest-private-dns.name
-  virtual_network_id    = azurerm_virtual_network.ktest-vnet.id
-}
+#resource "azurerm_private_dns_zone_virtual_network_link" "ktest-private-dns-link" {
+#  name                  = "${var.prefix}-${var.environment}-${var.app_name}-vnet"
+#  resource_group_name   = data.azurerm_resource_group.ktest-rg.name
+#  private_dns_zone_name = azurerm_private_dns_zone.ktest-private-dns.name
+#  virtual_network_id    = azurerm_virtual_network.ktest-vnet.id
+#}
 
 # Create a DB Private DNS Zone
 resource "azurerm_private_dns_zone" "ktest-endpoint-dns-private-zone" {
