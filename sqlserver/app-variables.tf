@@ -30,6 +30,8 @@ variable "prefix" {
 variable "location" {
   type        = string
   description = "Azure region where the resource group will be created"
+  default     = "us-south-central"
+
 }
 
 # application or company environment
