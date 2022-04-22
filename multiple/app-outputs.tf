@@ -23,10 +23,10 @@ output "Event_Hub_Namespace" {
 }
 
 
-output "Event_Hub" {
-  description = "Event Hub"
-  value       = "${azurerm_eventhub.event_hub1.name}"
-}
+#output "Event_Hub" {
+#  description = "Event Hub"
+#  value       = "${azurerm_eventhub.event_hub1.name}"
+#}
 
 
 
