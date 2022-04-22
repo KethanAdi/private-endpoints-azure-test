@@ -62,20 +62,22 @@ resource "azurerm_subnet" "ktest-db-subnet" {
 ## Network - DNS ##
 ###################
 
-# Create a Private DNS Zone
-#resource "azurerm_private_dns_zone" "ktest-private-dns" {
-#  name                = var.ktest-private-dns
-#  resource_group_name = data.azurerm_resource_group.ktest-rg.name
-#}
 
-# Link the Private DNS Zone with the VNET
-#resource "azurerm_private_dns_zone_virtual_network_link" "ktest-private-dns-link" {
-#  name                  = "${var.prefix}-${var.environment}-${var.app_name}-vnet"
-#  resource_group_name   = data.azurerm_resource_group.ktest-rg.name
-#  private_dns_zone_name = azurerm_private_dns_zone.ktest-private-dns.name
-#  virtual_network_id    = azurerm_virtual_network.ktest-vnet.id
-#}
+# Create a DB Private DNS A Record
+resource "azurerm_private_dns_a_record" "ktest-endpoint-dns-a-record" {
+  depends_on = [azurerm_mssql_server.ktest-sql-server]
+  name                = lower(azurerm_mssql_server.ktest-sql-server.name)
+  zone_name           = azurerm_private_dns_zone.ktest-endpoint-dns-private-zone.name
+  resource_group_name = data.azurerm_resource_group.ktest-rg.name
+  ttl                 = 300
+  records             = [data.azurerm_private_endpoint_connection.ktest-endpoint-connection.private_service_connection.0.private_ip_address]
+}
 
+# Create a DB Private DNS Zone
+resource "azurerm_private_dns_zone" "ktest-endpoint-dns-private-zone" {
+  name                = "${var.ktest-dns-privatelink}.database.windows.net"
+  resource_group_name = data.azurerm_resource_group.ktest-rg.name
+}
 
 ########################
 ## Network - Endpoint ##
@@ -104,21 +106,6 @@ data "azurerm_private_endpoint_connection" "ktest-endpoint-connection" {
   resource_group_name = data.azurerm_resource_group.ktest-rg.name
 }
 
-# Create a DB Private DNS A Record
-resource "azurerm_private_dns_a_record" "ktest-endpoint-dns-a-record" {
-  depends_on = [azurerm_mssql_server.ktest-sql-server]
-  name                = lower(azurerm_mssql_server.ktest-sql-server.name)
-  zone_name           = azurerm_private_dns_zone.ktest-endpoint-dns-private-zone.name
-  resource_group_name = data.azurerm_resource_group.ktest-rg.name
-  ttl                 = 300
-  records             = [data.azurerm_private_endpoint_connection.ktest-endpoint-connection.private_service_connection.0.private_ip_address]
-}
-
-# Create a DB Private DNS Zone
-resource "azurerm_private_dns_zone" "ktest-endpoint-dns-private-zone" {
-  name                = "${var.ktest-dns-privatelink}.database.windows.net"
-  resource_group_name = data.azurerm_resource_group.ktest-rg.name
-}
 
 # Create a Private DNS to VNET link
 resource "azurerm_private_dns_zone_virtual_network_link" "dns-zone-to-vnet-link" {
