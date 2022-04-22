@@ -89,7 +89,6 @@ resource "azurerm_private_endpoint" "ktest-db-endpoint" {
   location            = data.azurerm_resource_group.ktest-rg.location
   resource_group_name = data.azurerm_resource_group.ktest-rg.name
   subnet_id           = azurerm_subnet.ktest-db-subnet.id
-
   private_service_connection {
     name                           = "${var.prefix}-${var.environment}-${var.app_name}-db-endpoint"
     is_manual_connection           = "false"
@@ -101,7 +100,6 @@ resource "azurerm_private_endpoint" "ktest-db-endpoint" {
 # DB Private Endpoint Connecton
 data "azurerm_private_endpoint_connection" "ktest-endpoint-connection" {
   depends_on = [azurerm_private_endpoint.ktest-db-endpoint]
-
   name                = azurerm_private_endpoint.ktest-db-endpoint.name
   resource_group_name = data.azurerm_resource_group.ktest-rg.name
 }
@@ -109,7 +107,6 @@ data "azurerm_private_endpoint_connection" "ktest-endpoint-connection" {
 # Create a DB Private DNS A Record
 resource "azurerm_private_dns_a_record" "ktest-endpoint-dns-a-record" {
   depends_on = [azurerm_mssql_server.ktest-sql-server]
-
   name                = lower(azurerm_mssql_server.ktest-sql-server.name)
   zone_name           = azurerm_private_dns_zone.ktest-endpoint-dns-private-zone.name
   resource_group_name = data.azurerm_resource_group.ktest-rg.name
