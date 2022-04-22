@@ -98,7 +98,7 @@ resource "azurerm_private_endpoint" "ktest-db-endpoint" {
 }
 
 # DB Private Endpoint Connecton
-data "azurerm_private_endpoint_connection" "ktest-endpoint-connection" {
+data "azurerm_private_endpoint_connection" "ktest-db-endpoint-connection" {
   depends_on = [azurerm_private_endpoint.ktest-db-endpoint]
   name                = azurerm_private_endpoint.ktest-db-endpoint.name
   resource_group_name = data.azurerm_resource_group.ktest-rg.name
@@ -111,7 +111,7 @@ resource "azurerm_private_dns_a_record" "ktest-endpoint-event-dns-a-record" {
   zone_name           = azurerm_private_dns_zone.ktest-endpoint-dns-private-zone.name
   resource_group_name = data.azurerm_resource_group.ktest-rg.name
   ttl                 = 300
-  records             = [data.azurerm_private_endpoint_connection.ktest-endpoint-connection.private_service_connection.0.private_ip_address]
+  records             = [data.azurerm_private_endpoint_connection.ktest-db-endpoint-connection.private_service_connection.0.private_ip_address]
 }
 
 # Create a DB Private DNS Zone
@@ -184,7 +184,7 @@ resource "azurerm_private_endpoint" "ktest-event-endpoint" {
 }
 
 # event Private Endpoint Connecton
-data "azurerm_private_endpoint_connection" "ktest-endpoint-connection" {
+data "azurerm_private_endpoint_connection" "ktest-event-endpoint-connection" {
   depends_on = [azurerm_private_endpoint.ktest-event-endpoint]
   name                = azurerm_private_endpoint.ktest-event-endpoint.name
   resource_group_name = data.azurerm_resource_group.ktest-rg.name
@@ -197,7 +197,7 @@ resource "azurerm_private_dns_a_record" "ktest-endpoint-dns-a-record" {
   zone_name           = azurerm_private_dns_zone.ktest-endpoint-dns-private-zone.name
   resource_group_name = data.azurerm_resource_group.ktest-rg.name
   ttl                 = 300
-  records             = [data.azurerm_private_endpoint_connection.ktest-endpoint-connection.private_service_connection.0.private_ip_address]
+  records             = [data.azurerm_private_endpoint_connection.ktest-event-endpoint-connection.private_service_connection.0.private_ip_address]
 }
 
 # Create a event Private DNS Zone
