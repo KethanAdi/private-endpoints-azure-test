@@ -108,14 +108,14 @@ data "azurerm_private_endpoint_connection" "ktest-db-endpoint-connection" {
 resource "azurerm_private_dns_a_record" "ktest-endpoint-db-dns-a-record" {
   depends_on = [azurerm_mssql_server.ktest-sql-server]
   name                = lower(azurerm_mssql_server.ktest-sql-server.name)
-  zone_name           = azurerm_private_dns_zone.ktest-endpoint-dns-private-zone.name
+  zone_name           = azurerm_private_dns_zone.ktest-endpoint-db-dns-private-zone.name
   resource_group_name = data.azurerm_resource_group.ktest-rg.name
   ttl                 = 300
   records             = [data.azurerm_private_endpoint_connection.ktest-db-endpoint-connection.private_service_connection.0.private_ip_address]
 }
 
 # Create a DB Private DNS Zone
-resource "azurerm_private_dns_zone" "ktest-endpoint-event-dns-private-zone" {
+resource "azurerm_private_dns_zone" "ktest-endpoint-db-dns-private-zone" {
   name                = "${var.ktest-dns-privatelink}.privatelink.database.windows.net"
   resource_group_name = data.azurerm_resource_group.ktest-rg.name
 }
@@ -124,7 +124,7 @@ resource "azurerm_private_dns_zone" "ktest-endpoint-event-dns-private-zone" {
 resource "azurerm_private_dns_zone_virtual_network_link" "db-dns-zone-to-vnet-link" {
   name                  = "${var.prefix}-${var.environment}-${var.sql_app_name}-db-vnet-link"
   resource_group_name   = data.azurerm_resource_group.ktest-rg.name
-  private_dns_zone_name = azurerm_private_dns_zone.ktest-endpoint-event-dns-private-zone.name
+  private_dns_zone_name = azurerm_private_dns_zone.ktest-endpoint-db-dns-private-zone.name
   virtual_network_id    = azurerm_virtual_network.ktest-vnet.id
 }
 
@@ -194,14 +194,14 @@ data "azurerm_private_endpoint_connection" "ktest-event-endpoint-connection" {
 resource "azurerm_private_dns_a_record" "ktest-event-endpoint-dns-a-record" {
   depends_on = [azurerm_eventhub_namespace.event_namespace1]
   name                = lower(azurerm_eventhub_namespace.event_namespace1.name)
-  zone_name           = azurerm_private_dns_zone.ktest-endpoint-dns-private-zone.name
+  zone_name           = azurerm_private_dns_zone.ktest-endpoint-event-dns-private-zone.name
   resource_group_name = data.azurerm_resource_group.ktest-rg.name
   ttl                 = 300
   records             = [data.azurerm_private_endpoint_connection.ktest-event-endpoint-connection.private_service_connection.0.private_ip_address]
 }
 
 # Create a event Private DNS Zone
-resource "azurerm_private_dns_zone" "ktest-endpoint-dns-private-zone" {
+resource "azurerm_private_dns_zone" "ktest-endpoint-event-dns-private-zone" {
   name                = "${var.ktest-event-privatelink}.privatelink.servicebus.windows.net"
   resource_group_name = data.azurerm_resource_group.ktest-rg.name
 }
@@ -210,7 +210,7 @@ resource "azurerm_private_dns_zone" "ktest-endpoint-dns-private-zone" {
 resource "azurerm_private_dns_zone_virtual_network_link" "event-dns-zone-to-vnet-link" {
   name                  = "${var.prefix}-${var.environment}-${var.event_app_name}-event-vnet-link"
   resource_group_name   = data.azurerm_resource_group.ktest-rg.name
-  private_dns_zone_name = azurerm_private_dns_zone.ktest-endpoint-dns-private-zone.name
+  private_dns_zone_name = azurerm_private_dns_zone.ktest-endpoint-event-dns-private-zone.name
   virtual_network_id    = azurerm_virtual_network.ktest-vnet.id
 }
 
