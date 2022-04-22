@@ -105,7 +105,7 @@ data "azurerm_private_endpoint_connection" "ktest-db-endpoint-connection" {
 }
 
 # Create a DB Private DNS A Record
-resource "azurerm_private_dns_a_record" "ktest-endpoint-event-dns-a-record" {
+resource "azurerm_private_dns_a_record" "ktest-endpoint-db-dns-a-record" {
   depends_on = [azurerm_mssql_server.ktest-sql-server]
   name                = lower(azurerm_mssql_server.ktest-sql-server.name)
   zone_name           = azurerm_private_dns_zone.ktest-endpoint-dns-private-zone.name
@@ -191,7 +191,7 @@ data "azurerm_private_endpoint_connection" "ktest-event-endpoint-connection" {
 }
 
 # Create a event Private DNS A Record
-resource "azurerm_private_dns_a_record" "ktest-endpoint-dns-a-record" {
+resource "azurerm_private_dns_a_record" "ktest-event-endpoint-dns-a-record" {
   depends_on = [azurerm_eventhub_namespace.event_namespace1]
   name                = lower(azurerm_eventhub_namespace.event_namespace1.name)
   zone_name           = azurerm_private_dns_zone.ktest-endpoint-dns-private-zone.name
