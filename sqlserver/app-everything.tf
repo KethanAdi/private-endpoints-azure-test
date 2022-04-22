@@ -122,6 +122,7 @@ resource "azurerm_private_dns_zone" "ktest-endpoint-dns-private-zone" {
   name                = "${var.ktest-dns-privatelink}.database.windows.net"
   resource_group_name = data.azurerm_resource_group.ktest-rg.name
 }
+
 # Create a Private DNS to VNET link
 resource "azurerm_private_dns_zone_virtual_network_link" "dns-zone-to-vnet-link" {
   name                  = "${var.prefix}-${var.environment}-${var.app_name}-db-vnet-link"
