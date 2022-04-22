@@ -232,7 +232,7 @@ resource "azurerm_eventhub" "event_hub1" {
   depends_on = [azurerm_eventhub_namespace.event_namespace1]
   name                = var.event_hub_n
   namespace_name      = azurerm_eventhub_namespace.event_namespace1.name
-  resource_group_name = data.azurerm_resource_group.ktest-rg.location
+  resource_group_name = data.azurerm_resource_group.ktest-rg.name
   partition_count     = 2
   message_retention   = 1
 }
