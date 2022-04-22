@@ -3,15 +3,14 @@
 #############################
 
 # app name 
-variable "app_name" {
+variable "sql_app_name" {
   type        = string
-  description = "This variable defines the application name used to build resources"
+  description = "This variable defines the sql application name used to build resources"
 }
 
-# company name 
-variable "company" {
+variable "event_app_name" {
   type        = string
-  description = "This variable defines the company name used to build resources"
+  description = "This variable defines the event application name used to build resources"
 }
 
 # company name 
@@ -50,14 +49,9 @@ variable "ktest-vnet-cidr" {
   description = "The CIDR of the VNET"
 }
 
-variable "ktest-db-subnet-cidr" {
+variable "ktest-subnet-cidr" {
   type        = string
   description = "The CIDR for the Backoffice subnet"
-}
-
-variable "ktest-private-dns" {
-  type        = string
-  description = "The private DNS name"
 }
 
 variable "ktest-dns-privatelink" {
@@ -65,6 +59,11 @@ variable "ktest-dns-privatelink" {
   description = "SQL DNS Private Link"
 }
 
+
+variable "ktest-event-privatelink" {
+  type        = string
+  description = "Event DNS Private Link"
+}
 
 ############################
 ## SQL Server - Variables ##
@@ -82,4 +81,12 @@ variable "ktest-sql-admin-password" {
   default     = "S3cur3Acc3ss67"
 }
 
+variable "event_hub_namespace_n" {
+  default       = "testeventhub12345678"
+  description   = "Event hub"
+}
 
+variable "event_hub_n" {
+  default       = "testeventhub1"
+  description   = "Event hubs"
+}
