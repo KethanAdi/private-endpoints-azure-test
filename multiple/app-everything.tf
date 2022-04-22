@@ -116,7 +116,7 @@ resource "azurerm_private_dns_a_record" "ktest-endpoint-db-dns-a-record" {
 
 # Create a DB Private DNS Zone
 resource "azurerm_private_dns_zone" "ktest-endpoint-event-dns-private-zone" {
-  name                = "${var.ktest-dns-privatelink}.database.windows.net"
+  name                = "${var.ktest-dns-privatelink}.privatelink.database.windows.net"
   resource_group_name = data.azurerm_resource_group.ktest-rg.name
 }
 
@@ -202,7 +202,7 @@ resource "azurerm_private_dns_a_record" "ktest-event-endpoint-dns-a-record" {
 
 # Create a event Private DNS Zone
 resource "azurerm_private_dns_zone" "ktest-endpoint-dns-private-zone" {
-  name                = "${var.ktest-event-privatelink}.database.windows.net"
+  name                = "${var.ktest-event-privatelink}.privatelink.servicebus.windows.net"
   resource_group_name = data.azurerm_resource_group.ktest-rg.name
 }
 
