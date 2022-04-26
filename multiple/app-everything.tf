@@ -217,6 +217,7 @@ resource "azurerm_private_dns_zone_virtual_network_link" "event-dns-zone-to-vnet
 
 #Event hub
 resource "azurerm_eventhub_namespace" "event_namespace1" {
+  depends_on = [azurerm_subnet.ktest-subnet]
   name                = var.event_hub_namespace_n
   location            = data.azurerm_resource_group.ktest-rg.location
   resource_group_name =data.azurerm_resource_group.ktest-rg.name
