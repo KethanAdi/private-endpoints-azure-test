@@ -224,6 +224,7 @@ resource "azurerm_eventhub_namespace" "event_namespace1" {
   sku                 = "Standard"
   capacity            = 1
   network_rulesets  = [{
+    public_network_access = "Disabled"
     default_action       = "Allow"
     trusted_service_access_enabled = false
     virtual_network_rule = [{
