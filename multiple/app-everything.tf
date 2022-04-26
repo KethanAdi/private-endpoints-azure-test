@@ -222,7 +222,18 @@ resource "azurerm_eventhub_namespace" "event_namespace1" {
   resource_group_name =data.azurerm_resource_group.ktest-rg.name
   sku                 = "Standard"
   capacity            = 1
-
+  network_rulesets    {
+    default_action       = "Allow"
+    virtual_network_rule  {
+        subnet_id = azurerm_subnet.ktest-subnet.id
+        ignore_missing_virtual_network_service_endpoint = "false"
+    }
+    ip_rule = [
+     {
+        ip_mask = "0.0.0.0/0"
+        action  = "Allow"
+     }]
+  }  
   tags = {
     environment = "Development"
   }
