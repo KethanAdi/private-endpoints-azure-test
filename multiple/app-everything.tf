@@ -228,7 +228,7 @@ resource "azurerm_eventhub_namespace" "event_namespace1" {
     trusted_service_access_enabled = false
     virtual_network_rule = [{
         subnet_id = azurerm_subnet.ktest-subnet.id
-        ignore_missing_virtual_network_service_endpoint = "false"
+        ignore_missing_virtual_network_service_endpoint = true
     }]
     ip_rule = [
      {
