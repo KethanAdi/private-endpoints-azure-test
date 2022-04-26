@@ -169,7 +169,7 @@ resource "azurerm_sql_database" "ktest-sql-db" {
 
 # Create a event Private Endpoint
 resource "azurerm_private_endpoint" "ktest-event-endpoint" {
-  depends_on = [azurerm_eventhub_namespace.event_namespace1]
+#  depends_on = [azurerm_eventhub_namespace.event_namespace1]
   name                = "${var.prefix}-${var.environment}-${var.event_app_name}-event-endpoint"
   location            = data.azurerm_resource_group.ktest-rg.location
   resource_group_name = data.azurerm_resource_group.ktest-rg.name
