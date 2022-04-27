@@ -1,0 +1,169 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "namespaces_testevent12474863r876trss_name": {
+            "defaultValue": "testevent12474863r876trss",
+            "type": "String"
+        },
+        "privateEndpoints_ktest_dev_event_event_endpoint_externalid": {
+            "defaultValue": "/subscriptions/0f39574d-d756-48cf-b622-0e27a6943bd2/resourceGroups/1-93d2a7df-playground-sandbox/providers/Microsoft.Network/privateEndpoints/ktest-dev-event-event-endpoint",
+            "type": "String"
+        },
+        "virtualNetworks_ktest_dev_sql_vnet_externalid": {
+            "defaultValue": "/subscriptions/0f39574d-d756-48cf-b622-0e27a6943bd2/resourceGroups/1-93d2a7df-playground-sandbox/providers/Microsoft.Network/virtualNetworks/ktest-dev-sql-vnet",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.EventHub/namespaces",
+            "apiVersion": "2021-11-01",
+            "name": "[parameters('namespaces_testevent12474863r876trss_name')]",
+            "location": "West US",
+            "tags": {
+                "environment": "Development"
+            },
+            "sku": {
+                "name": "Standard",
+                "tier": "Standard",
+                "capacity": 1
+            },
+            "properties": {
+                "disableLocalAuth": false,
+                "zoneRedundant": false,
+                "privateEndpointConnections": [
+                    {
+                        "properties": {
+                            "provisioningState": "Succeeded",
+                            "privateEndpoint": {
+                                "id": "[parameters('privateEndpoints_ktest_dev_event_event_endpoint_externalid')]"
+                            },
+                            "privateLinkServiceConnectionState": {
+                                "status": "Approved",
+                                "description": "Auto-Approved"
+                            }
+                        }
+                    }
+                ],
+                "isAutoInflateEnabled": false,
+                "maximumThroughputUnits": 0,
+                "kafkaEnabled": true
+            }
+        },
+        {
+            "type": "Microsoft.EventHub/namespaces/AuthorizationRules",
+            "apiVersion": "2021-11-01",
+            "name": "[concat(parameters('namespaces_testevent12474863r876trss_name'), '/RootManageSharedAccessKey')]",
+            "location": "West US",
+            "dependsOn": [
+                "[resourceId('Microsoft.EventHub/namespaces', parameters('namespaces_testevent12474863r876trss_name'))]"
+            ],
+            "properties": {
+                "rights": [
+                    "Listen",
+                    "Manage",
+                    "Send"
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.EventHub/namespaces/eventhubs",
+            "apiVersion": "2021-11-01",
+            "name": "[concat(parameters('namespaces_testevent12474863r876trss_name'), '/test1')]",
+            "location": "West US",
+            "dependsOn": [
+                "[resourceId('Microsoft.EventHub/namespaces', parameters('namespaces_testevent12474863r876trss_name'))]"
+            ],
+            "properties": {
+                "messageRetentionInDays": 1,
+                "partitionCount": 2,
+                "status": "Active"
+            }
+        },
+        {
+            "type": "Microsoft.EventHub/namespaces/ipfilterrules",
+            "apiVersion": "2018-01-01-preview",
+            "name": "[concat(parameters('namespaces_testevent12474863r876trss_name'), '/3972d552-f604-4aa2-aaaf-182503d1cf2f')]",
+            "location": "West US",
+            "dependsOn": [
+                "[resourceId('Microsoft.EventHub/namespaces', parameters('namespaces_testevent12474863r876trss_name'))]"
+            ],
+            "properties": {
+                "ipMask": "0.0.0.0/0",
+                "action": "Accept",
+                "filterName": "3972d552-f604-4aa2-aaaf-182503d1cf2f"
+            }
+        },
+        {
+            "type": "Microsoft.EventHub/namespaces/networkRuleSets",
+            "apiVersion": "2021-11-01",
+            "name": "[concat(parameters('namespaces_testevent12474863r876trss_name'), '/default')]",
+            "location": "West US",
+            "dependsOn": [
+                "[resourceId('Microsoft.EventHub/namespaces', parameters('namespaces_testevent12474863r876trss_name'))]"
+            ],
+            "properties": {
+                "publicNetworkAccess": "Disabled",
+                "defaultAction": "Allow",
+                "virtualNetworkRules": [
+                    {
+                        "subnet": {
+                            "id": "[concat(parameters('virtualNetworks_ktest_dev_sql_vnet_externalid'), '/subnets/ktest-dev-sql-subnet')]"
+                        },
+                        "ignoreMissingVnetServiceEndpoint": true
+                    }
+                ],
+                "ipRules": [
+                    {
+                        "ipMask": "0.0.0.0/0",
+                        "action": "Allow"
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.EventHub/namespaces/privateEndpointConnections",
+            "apiVersion": "2021-11-01",
+            "name": "[concat(parameters('namespaces_testevent12474863r876trss_name'), '/5152e3b4-5be8-4212-ab2f-b5fc8bb7dc10')]",
+            "location": "West US",
+            "dependsOn": [
+                "[resourceId('Microsoft.EventHub/namespaces', parameters('namespaces_testevent12474863r876trss_name'))]"
+            ],
+            "properties": {
+                "provisioningState": "Succeeded",
+                "privateEndpoint": {
+                    "id": "[parameters('privateEndpoints_ktest_dev_event_event_endpoint_externalid')]"
+                },
+                "privateLinkServiceConnectionState": {
+                    "status": "Approved",
+                    "description": "Auto-Approved"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.EventHub/namespaces/virtualnetworkrules",
+            "apiVersion": "2018-01-01-preview",
+            "name": "[concat(parameters('namespaces_testevent12474863r876trss_name'), '/0f39574d-d756-48cf-b622-0e27a6943bd2-1-93d2a7df-playground-sandbox-ktest-dev-sql-vnet-ktest-dev-sql-subnet')]",
+            "location": "West US",
+            "dependsOn": [
+                "[resourceId('Microsoft.EventHub/namespaces', parameters('namespaces_testevent12474863r876trss_name'))]"
+            ],
+            "properties": {
+                "virtualNetworkSubnetId": "[concat(parameters('virtualNetworks_ktest_dev_sql_vnet_externalid'), '/subnets/ktest-dev-sql-subnet')]"
+            }
+        },
+        {
+            "type": "Microsoft.EventHub/namespaces/eventhubs/consumergroups",
+            "apiVersion": "2021-11-01",
+            "name": "[concat(parameters('namespaces_testevent12474863r876trss_name'), '/test1/$Default')]",
+            "location": "West US",
+            "dependsOn": [
+                "[resourceId('Microsoft.EventHub/namespaces/eventhubs', parameters('namespaces_testevent12474863r876trss_name'), 'test1')]",
+                "[resourceId('Microsoft.EventHub/namespaces', parameters('namespaces_testevent12474863r876trss_name'))]"
+            ],
+            "properties": {}
+        }
+    ]
+}
