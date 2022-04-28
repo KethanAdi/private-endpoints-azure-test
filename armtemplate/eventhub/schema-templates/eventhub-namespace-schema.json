@@ -1,180 +1,45 @@
 {
-    "$schema": "http://schema.management.azure.com/schemas/2015-01-01-preview/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
         "name": {
-            "type": "String"
+            "value": "exampletest1ns23"
+        },
+        "resourceGroup": {
+            "value": "1-e983bef7-playground-sandbox"
+        },
+        "subscriptionId": {
+            "value": "964df7ca-3ba4-48b6-a695-1ed9db5723f8"
         },
         "location": {
-            "type": "String"
+            "value": "westus"
+        },
+        "vnet": {
+            "value": "vnet1"
+        },
+        "subnet": {
+            "value": "default"
         },
         "skuName": {
-            "type": "String"
+            "value": "Standard"
         },
         "skuTier": {
-            "type": "String"
+            "value": "Standard"
         },
         "skuCapacity": {
-            "type": "String"
+            "value": "1"
         },
         "isAutoInflateEnabled": {
-            "type": "String"
+            "value": "false"
         },
         "maximumThroughputUnits": {
-            "type": "String"
+            "value": "0"
         },
         "zoneRedundant": {
-            "type": "Bool"
+            "value": false
         },
         "tags": {
-            "type": "Object"
+            "value": {}
         }
-    },
-    "resources": [
-        {
-            "type": "Microsoft.EventHub/namespaces",
-            "apiVersion": "2021-06-01-preview",
-            "name": "[parameters('name')]",
-            "location": "[parameters('location')]",
-            "tags": "[parameters('tags')]",
-            "sku": {
-                "name": "[parameters('skuTier')]",
-                "tier": "[parameters('skuTier')]",
-                "capacity": "[parameters('skuCapacity')]"
-            },
-            "properties": {
-                "isAutoInflateEnabled": "[parameters('isAutoInflateEnabled')]",
-                "maximumThroughputUnits": "[parameters('maximumThroughputUnits')]",
-                "zoneRedundant": "[parameters('zoneRedundant')]"
-            }
-        },        {
-            "type": "Microsoft.EventHub/namespaces/networkRuleSets",
-            "apiVersion": "2021-11-01",
-            "name": "[concat(parameters('name'), '/default')]",
-            "location": "West US",
-            "dependsOn": [
-                "[resourceId('Microsoft.EventHub/namespaces', parameters('name'))]"
-            ],
-            "properties": {
-                "publicNetworkAccess": "Disabled",
-                "defaultAction": "Allow",
-                "virtualNetworkRules": [],
-                "ipRules": []
-            }
-        },
-        {
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2017-05-10",
-            "name": "example-1_e96796d4-b345-4f9b-afcb-1177a200f024",
-            "dependsOn": [
-                "Microsoft.EventHub/namespaces/exampletest1ns23"
-            ],
-            "properties": {
-                "mode": "Incremental",
-                "parameters": {
-                    "privateEndpointName": {
-                        "value": "example-1"
-                    },
-                    "privateEndpointConnectionId": {
-                        "value": "/subscriptions/0f39574d-d756-48cf-b622-0e27a6943bd2/resourceGroups/1-93d2a7df-playground-sandbox/providers/Microsoft.Network/privateEndpoints/privateLinkServiceConnections/example-1_9f50cf0a-a273-4090-a07e-494b6e6cf03e"
-                    },
-                    "privateEndpointConnectionName": {
-                        "value": "example-1_9f50cf0a-a273-4090-a07e-494b6e6cf03e"
-                    },
-                    "privateEndpointId": {
-                        "value": "/subscriptions/0f39574d-d756-48cf-b622-0e27a6943bd2/resourceGroups/1-93d2a7df-playground-sandbox/providers/Microsoft.Network/privateEndpoints/example-1"
-                    },
-                    "privateEndpointApiVersion": {
-                        "value": "2019-04-01"
-                    },
-                    "privateLinkServiceId": {
-                        "value": "/subscriptions/0f39574d-d756-48cf-b622-0e27a6943bd2/resourceGroups/1-93d2a7df-playground-sandbox/providers/Microsoft.EventHub/namespaces/exampletest1ns23"
-                    },
-                    "groupId": {
-                        "value": "namespace"
-                    },
-                    "subnetId": {
-                        "value": "/subscriptions/0f39574d-d756-48cf-b622-0e27a6943bd2/resourceGroups/1-93d2a7df-playground-sandbox/providers/Microsoft.Network/virtualNetworks/ktest-dev-sql-vnet/subnets/ktest-dev-sql-subnet"
-                    },
-                    "location": {
-                        "value": "westus"
-                    },
-                    "tags": {
-                        "value": {}
-                    }
-                },
-                "templatelink": {
-                    "contentVersion": "1.0.0.0",
-                    "uri": "https://eventhub.hosting.portal.azure.net/eventhub/Content/20220422.1/DeploymentTemplates/PrivateEndpointForEventHub.json"
-                }
-            },
-            "resources": [],
-            "subscriptionId": "0f39574d-d756-48cf-b622-0e27a6943bd2",
-            "resourceGroup": "1-93d2a7df-playground-sandbox"
-        },
-        {
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2017-05-10",
-            "name": "PrivateDns-e96796d4b3454f9bafcb1177a200f025",
-            "dependsOn": [
-                "[string('example-1_e96796d4-b345-4f9b-afcb-1177a200f024')]"
-            ],
-            "properties": {
-                "mode": "Incremental",
-                "template": {
-                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-                    "contentVersion": "1.0.0.0",
-                    "resources": [
-                        {
-                            "apiVersion": "2017-05-10",
-                            "name": "EndpointDnsRecords-e96796d4b3454f9bafcb1177a200f025",
-                            "type": "Microsoft.Resources/deployments",
-                            "dependsOn": [],
-                            "properties": {
-                                "mode": "Incremental",
-                                "templatelink": {
-                                    "contentVersion": "1.0.0.0",
-                                    "uri": "https://eventhub.hosting.portal.azure.net/eventhub/Content/20220422.1/DeploymentTemplates/PrivateDnsForPrivateEndpoint.json"
-                                },
-                                "parameters": {
-                                    "privateDnsName": {
-                                        "value": "[string('privatelink.servicebus.windows.net')]"
-                                    },
-                                    "privateEndpointNicResourceId": {
-                                        "value": "[reference('example-1_e96796d4-b345-4f9b-afcb-1177a200f024').outputs.networkinterfaceid.value]"
-                                    },
-                                    "nicRecordsTemplateUri": {
-                                        "value": "https://eventhub.hosting.portal.azure.net/eventhub/Content/20220422.1/DeploymentTemplates/PrivateDnsForPrivateEndpointNic.json"
-                                    },
-                                    "ipConfigRecordsTemplateUri": {
-                                        "value": "https://eventhub.hosting.portal.azure.net/eventhub/Content/20220422.1/DeploymentTemplates/PrivateDnsForPrivateEndpointIpConfig.json"
-                                    },
-                                    "uniqueId": {
-                                        "value": "e96796d4b3454f9bafcb1177a200f025"
-                                    },
-                                    "existingRecords": {
-                                        "value": {
-                                            "testevent12474863r876trss": {
-                                                "metadata": {},
-                                                "fqdn": "testevent12474863r876trss.privatelink.servicebus.windows.net.",
-                                                "ttl": 300,
-                                                "aRecords": [
-                                                    {
-                                                        "ipv4Address": "10.50.2.5"
-                                                    }
-                                                ],
-                                                "isAutoRegistered": false
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    ]
-                }
-            },
-            "subscriptionId": "[string('0f39574d-d756-48cf-b622-0e27a6943bd2')]",
-            "resourceGroup": "[string('1-93d2a7df-playground-sandbox')]"
-        }
-    ]
+    }
 }
