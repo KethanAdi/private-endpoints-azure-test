@@ -5,8 +5,20 @@
         "name": {
             "value": "exampletest1ns23"
         },
+        "resourceGroup": {
+            "value": "1-e983bef7-playground-sandbox"
+        },
+        "subscriptionId": {
+            "value": "964df7ca-3ba4-48b6-a695-1ed9db5723f8"
+        },
         "location": {
             "value": "westus"
+        },
+        "vnet": {
+            "value": "vnet1"
+        },
+        "subnet": {
+            "value": "default"
         },
         "skuName": {
             "value": "Standard"
