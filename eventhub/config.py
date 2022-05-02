@@ -2,3 +2,4 @@ storage_endpoint="DefaultEndpointsProtocol=https;AccountName=s653829458i;Account
 eventhubns_endpoint="Endpoint=sb://event12843496ssssss.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=clHqVN3h0gox7553soxYH8BXgV8CU7TWaxQHvIrsnkE="
 eventhub_namespace=""
 eventhub_name="event1"
+container_name="container1"
