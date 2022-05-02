@@ -13,10 +13,10 @@ async def on_event(partition_context, event):
 
 async def main():
     # Create an Azure blob checkpoint store to store the checkpoints.
-    checkpoint_store = BlobCheckpointStore.from_connection_string("DefaultEndpointsProtocol=https;AccountName=tttttt762383232;AccountKey=JjXEGl14GOiiETxrrMLWpi6RYNlWogFopjJjb8fNgucirrrVHzKEPXz66owlrj4F6wzKDDWttbs9mnthy61XMg==;EndpointSuffix=core.windows.net", "container1")
+    checkpoint_store = BlobCheckpointStore.from_connection_string("DefaultEndpointsProtocol=https;AccountName=s653829458i;AccountKey=KQOr/41tYR56HEXuwXyR+OB2NyYhMtTXdXuPUAENON/PM7MLxhAdpU3taen83ic4YFeB79jyn9e+0WKHjiuTzw==;EndpointSuffix=core.windows.net", "container1")
 
     # Create a consumer client for the event hub.
-    client = EventHubConsumerClient.from_connection_string("Endpoint=sb://namespace16728537411ss.servicebus.windows.net/;SharedAccessKeyName=s1;SharedAccessKey=Z52nBef1qRtRY505lDf4GyLwfL4Tus7UJBtLZiso7Yo=;EntityPath=eventhub1", consumer_group="$Default", eventhub_name="eventhub1", checkpoint_store=checkpoint_store)
+    client = EventHubConsumerClient.from_connection_string("Endpoint=sb://event12843496ssssss.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=clHqVN3h0gox7553soxYH8BXgV8CU7TWaxQHvIrsnkE=", consumer_group="$Default", eventhub_name="eventhub1", checkpoint_store=checkpoint_store)
     async with client:
         # Call the receive method. Read from the beginning of the partition (starting_position: "-1")
         await client.receive(on_event=on_event,  starting_position="-1")
