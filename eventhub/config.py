@@ -1,5 +1,5 @@
 storage_endpoint="DefaultEndpointsProtocol=https;AccountName=s653829458i;AccountKey=KQOr/41tYR56HEXuwXyR+OB2NyYhMtTXdXuPUAENON/PM7MLxhAdpU3taen83ic4YFeB79jyn9e+0WKHjiuTzw==;EndpointSuffix=core.windows.net"
-eventhubns_endpoint="Endpoint=sb://event12843496ssssss.servicebus.windows.net/;SharedAccessKeyName=s3;SharedAccessKey=GGCJdcgV0WXNxwG2vRJgDTyaSZejgC2+ZymXv5ASfZs="
+eventhubns_endpoint="Endpoint=sb://namespace1672853741132.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=Bx9ASJZu+JYoKUVU9BBmuM1Ite6c04zmrTsleWfCCSE="
 eventhub_namespace=""
 eventhub_name="eventhub1"
 container_name="container1"
